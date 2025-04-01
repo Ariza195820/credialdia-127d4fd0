@@ -1,45 +1,51 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { 
-  AreaChart, 
-  Area, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell
-} from 'recharts';
+import { AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Plus, AlertTriangle, CheckCircle, Clock, Users, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Sample data for charts
-const areaData = [
-  { name: 'Ene', total: 1500000 },
-  { name: 'Feb', total: 2300000 },
-  { name: 'Mar', total: 2000000 },
-  { name: 'Abr', total: 2780000 },
-  { name: 'May', total: 1890000 },
-  { name: 'Jun', total: 2390000 },
-  { name: 'Jul', total: 3490000 },
-];
-
-const pieData = [
-  { name: 'Al día', value: 70, color: '#0abcce' },
-  { name: 'Atrasados', value: 15, color: '#f97066' },
-  { name: 'Vencidos', value: 15, color: '#fba94c' },
-];
-
+const areaData = [{
+  name: 'Ene',
+  total: 1500000
+}, {
+  name: 'Feb',
+  total: 2300000
+}, {
+  name: 'Mar',
+  total: 2000000
+}, {
+  name: 'Abr',
+  total: 2780000
+}, {
+  name: 'May',
+  total: 1890000
+}, {
+  name: 'Jun',
+  total: 2390000
+}, {
+  name: 'Jul',
+  total: 3490000
+}];
+const pieData = [{
+  name: 'Al día',
+  value: 70,
+  color: '#0abcce'
+}, {
+  name: 'Atrasados',
+  value: 15,
+  color: '#f97066'
+}, {
+  name: 'Vencidos',
+  value: 15,
+  color: '#fba94c'
+}];
 const Dashboard = () => {
-  return (
-    <div className="space-y-6">
+  return <div className="space-y-6">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
+          <h1 className="text-3xl font-bold tracking-tight">Panel</h1>
           <p className="text-muted-foreground">
             Gestión general de tu sistema de créditos
           </p>
@@ -57,16 +63,7 @@ const Dashboard = () => {
             <CardTitle className="text-sm font-medium">
               Total Créditos
             </CardTitle>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth="2"
-              className="h-4 w-4 text-muted-foreground"
-            >
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" className="h-4 w-4 text-muted-foreground">
               <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
             </svg>
           </CardHeader>
@@ -131,40 +128,23 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent className="h-80">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart
-                data={areaData}
-                margin={{
-                  top: 10,
-                  right: 30,
-                  left: 0,
-                  bottom: 0,
-                }}
-              >
+              <AreaChart data={areaData} margin={{
+              top: 10,
+              right: 30,
+              left: 0,
+              bottom: 0
+            }}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="name" />
-                <YAxis 
-                  tickFormatter={(value) => 
-                    new Intl.NumberFormat('es-CO', {
-                      notation: 'compact',
-                      compactDisplay: 'short',
-                    }).format(value)
-                  }
-                />
-                <Tooltip 
-                  formatter={(value) => 
-                    new Intl.NumberFormat('es-CO', {
-                      style: 'currency',
-                      currency: 'COP',
-                    }).format(Number(value))
-                  }
-                />
-                <Area
-                  type="monotone"
-                  dataKey="total"
-                  stroke="#0abcce"
-                  fill="#0abcce"
-                  fillOpacity={0.2}
-                />
+                <YAxis tickFormatter={value => new Intl.NumberFormat('es-CO', {
+                notation: 'compact',
+                compactDisplay: 'short'
+              }).format(value)} />
+                <Tooltip formatter={value => new Intl.NumberFormat('es-CO', {
+                style: 'currency',
+                currency: 'COP'
+              }).format(Number(value))} />
+                <Area type="monotone" dataKey="total" stroke="#0abcce" fill="#0abcce" fillOpacity={0.2} />
               </AreaChart>
             </ResponsiveContainer>
           </CardContent>
@@ -179,20 +159,11 @@ const Dashboard = () => {
           <CardContent className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <PieChart>
-                <Pie
-                  data={pieData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  outerRadius={90}
-                  innerRadius={40}
-                  paddingAngle={5}
-                  dataKey="value"
-                  label={({ name, percent }) => `${name}: ${(percent * 100).toFixed(0)}%`}
-                >
-                  {pieData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
-                  ))}
+                <Pie data={pieData} cx="50%" cy="50%" labelLine={false} outerRadius={90} innerRadius={40} paddingAngle={5} dataKey="value" label={({
+                name,
+                percent
+              }) => `${name}: ${(percent * 100).toFixed(0)}%`}>
+                  {pieData.map((entry, index) => <Cell key={`cell-${index}`} fill={entry.color} />)}
                 </Pie>
                 <Tooltip />
               </PieChart>
@@ -211,8 +182,7 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {[1, 2, 3].map((i) => (
-                <div key={i} className="flex items-center justify-between border-b border-border pb-3">
+              {[1, 2, 3].map(i => <div key={i} className="flex items-center justify-between border-b border-border pb-3">
                   <div className="flex items-center gap-2">
                     <Clock className="h-5 w-5 text-muted-foreground" />
                     <div>
@@ -226,8 +196,7 @@ const Dashboard = () => {
                       Ver detalle
                     </Button>
                   </div>
-                </div>
-              ))}
+                </div>)}
             </div>
           </CardContent>
         </Card>
@@ -240,8 +209,7 @@ const Dashboard = () => {
           </CardHeader>
           <CardContent>
             <div className="space-y-4">
-              {[1, 2].map((i) => (
-                <div key={i} className="flex items-center justify-between border-b border-border pb-3">
+              {[1, 2].map(i => <div key={i} className="flex items-center justify-between border-b border-border pb-3">
                   <div className="flex items-center gap-2">
                     <FileText className="h-5 w-5 text-muted-foreground" />
                     <div>
@@ -253,8 +221,7 @@ const Dashboard = () => {
                     <Button variant="outline" size="sm">Rechazar</Button>
                     <Button size="sm" className="bg-finance-600 hover:bg-finance-700">Aprobar</Button>
                   </div>
-                </div>
-              ))}
+                </div>)}
               <div className="text-center pt-2">
                 <Link to="/applications">
                   <Button variant="link" className="text-finance-700">
@@ -266,8 +233,6 @@ const Dashboard = () => {
           </CardContent>
         </Card>
       </div>
-    </div>
-  );
+    </div>;
 };
-
 export default Dashboard;
