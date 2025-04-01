@@ -14,7 +14,7 @@ import {
   Pie,
   Cell
 } from 'recharts';
-import { Plus, AlertTriangle, CheckCircle, Clock } from 'lucide-react';
+import { Plus, AlertTriangle, CheckCircle, Clock, Users, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Sample data for charts
