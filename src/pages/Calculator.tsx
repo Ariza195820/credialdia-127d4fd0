@@ -9,7 +9,7 @@ import LoanSummary from '@/components/calculator/LoanSummary';
 
 const Calculator = () => {
   const { currency, currencySymbol, isLoading, formatCurrency } = useCurrencyDetection();
-  const [loanAmount, setLoanAmount] = useState(0);
+  const [loanAmount, setLoanAmount] = useState(1);
   const [interestRate, setInterestRate] = useState(0);
   const [loanTerm, setLoanTerm] = useState(0);
   const [paymentFrequency, setPaymentFrequency] = useState<PaymentFrequency>('monthly');

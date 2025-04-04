@@ -53,7 +53,7 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
           </div>
           <Slider
             id="loan-amount"
-            min={0}
+            min={1}
             max={200000000}
             step={1000000}
             value={[loanAmount]}
@@ -61,7 +61,7 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
             className="py-4"
           />
           <div className="flex justify-between text-sm text-muted-foreground">
-            <span>0</span>
+            <span>{currencySymbol}1</span>
             <span>{currencySymbol}200M</span>
           </div>
         </div>
