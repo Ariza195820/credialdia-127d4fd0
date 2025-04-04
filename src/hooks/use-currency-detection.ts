@@ -25,7 +25,7 @@ export function useCurrencyDetection() {
                 // Use coordinates to get country info
                 const { latitude, longitude } = position.coords;
                 const response = await fetch(
-                  `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+                  `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=es`
                 );
                 const data = await response.json();
                 
@@ -111,8 +111,8 @@ export function useCurrencyDetection() {
     return new Intl.NumberFormat('es', {
       style: 'currency',
       currency: currency,
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2
     }).format(value);
   };
 

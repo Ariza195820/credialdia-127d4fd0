@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -55,14 +54,14 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
             id="loan-amount"
             min={1}
             max={200000000}
-            step={1000000}
+            step={1}
             value={[loanAmount]}
             onValueChange={(value) => setLoanAmount(value[0])}
             className="py-4"
           />
           <div className="flex justify-between text-sm text-muted-foreground">
-            <span>{currencySymbol}1</span>
-            <span>{currencySymbol}200M</span>
+            <span>{formatCurrency(1)}</span>
+            <span>{formatCurrency(200000000)}</span>
           </div>
         </div>
 
