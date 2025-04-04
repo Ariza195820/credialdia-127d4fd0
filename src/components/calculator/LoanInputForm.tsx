@@ -75,10 +75,6 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
             onValueChange={(value) => setLoanAmount(value[0])}
             className="py-4"
           />
-          <div className="flex justify-between text-sm text-muted-foreground">
-            <span>{formatCurrency(1)}</span>
-            <span>{formatCurrency(200000000)}</span>
-          </div>
           <div className="pt-2">
             <Label htmlFor="manual-loan-amount" className="text-sm">Ingresa el monto manualmente:</Label>
             <Input
@@ -89,6 +85,10 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
               onChange={handleInputChange}
               placeholder="Ingresa el monto del crédito"
             />
+          </div>
+          <div className="flex justify-between text-sm text-muted-foreground mt-2">
+            <span>{formatCurrency(1)}</span>
+            <span>{formatCurrency(200000000)}</span>
           </div>
         </div>
 
