@@ -1,7 +1,9 @@
+
 import React from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
 import { Slider } from '@/components/ui/slider';
 import { ToggleGroup, ToggleGroupItem } from '@/components/ui/toggle-group';
 import { Calculator as CalculatorIcon, CreditCard } from 'lucide-react';
@@ -38,6 +40,20 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
   formatCurrency,
   onRecalculate
 }) => {
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // Remove any non-numeric characters and parse the value
+    const value = e.target.value.replace(/[^\d]/g, '');
+    const numericValue = parseInt(value, 10);
+    
+    // Check if the parsed value is a number and within the allowed range
+    if (!isNaN(numericValue) && numericValue >= 1 && numericValue <= 200000000) {
+      setLoanAmount(numericValue);
+    } else if (value === '') {
+      // If the input is empty, set a default value
+      setLoanAmount(1);
+    }
+  };
+
   return (
     <Card>
       <CardHeader>
@@ -62,6 +78,17 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>{formatCurrency(1)}</span>
             <span>{formatCurrency(200000000)}</span>
+          </div>
+          <div className="pt-2">
+            <Label htmlFor="manual-loan-amount" className="text-sm">Ingresa el monto manualmente:</Label>
+            <Input
+              id="manual-loan-amount"
+              type="text"
+              className="mt-1"
+              value={formatCurrency(loanAmount).replace(/[^\d,.]/g, '')}
+              onChange={handleInputChange}
+              placeholder="Ingresa el monto del crédito"
+            />
           </div>
         </div>
 
