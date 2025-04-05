@@ -50,11 +50,18 @@ export function calculateLoanDetails(
       frequencyFactor = 1;
   }
 
-  // Monthly interest rate
+  // Monthly interest rate (convert from percentage to decimal)
   const monthlyRate = interestRate / 100 / frequencyFactor;
   
-  // Calculate monthly payment
-  const payment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -loanTerm));
+  // Calculate payment
+  let payment = 0;
+  if (monthlyRate === 0) {
+    // If interest rate is 0%, simple division
+    payment = loanAmount / loanTerm;
+  } else {
+    // Standard formula for calculating payment with interest
+    payment = (loanAmount * monthlyRate) / (1 - Math.pow(1 + monthlyRate, -loanTerm));
+  }
   
   const totalPayment = payment * loanTerm;
   const totalInterest = totalPayment - loanAmount;

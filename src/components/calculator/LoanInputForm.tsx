@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
@@ -40,17 +40,34 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
   formatCurrency,
   onRecalculate
 }) => {
+  // State to track if the input field is focused
+  const [isInputFocused, setIsInputFocused] = useState(false);
+  const [manualInputValue, setManualInputValue] = useState('');
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    // Remove any non-numeric characters and parse the value
     const value = e.target.value.replace(/[^\d]/g, '');
+    setManualInputValue(value);
+    
     const numericValue = parseInt(value, 10);
     
-    // Check if the parsed value is a number and within the allowed range
     if (!isNaN(numericValue) && numericValue >= 1 && numericValue <= 200000000) {
       setLoanAmount(numericValue);
     } else if (value === '') {
-      // If the input is empty, set a default value
-      setLoanAmount(1);
+      // If the input is empty, don't change the loan amount yet
+      // This provides a better UX when clearing the field
+    }
+  };
+
+  const handleInputFocus = () => {
+    setIsInputFocused(true);
+    setManualInputValue('');
+  };
+
+  const handleInputBlur = () => {
+    setIsInputFocused(false);
+    // If the field is empty when blurring, revert to the current loan amount
+    if (manualInputValue === '') {
+      setManualInputValue(loanAmount.toString());
     }
   };
 
@@ -81,8 +98,10 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
               id="manual-loan-amount"
               type="text"
               className="mt-1"
-              value={formatCurrency(loanAmount).replace(/[^\d,.]/g, '')}
+              value={isInputFocused ? manualInputValue : formatCurrency(loanAmount).replace(/[^\d,.]/g, '')}
               onChange={handleInputChange}
+              onFocus={handleInputFocus}
+              onBlur={handleInputBlur}
               placeholder="Ingresa el monto del crédito"
             />
           </div>
@@ -100,7 +119,7 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
           <Slider
             id="interest-rate"
             min={0}
-            max={5}
+            max={20}
             step={0.1}
             value={[interestRate]}
             onValueChange={(value) => setInterestRate(value[0])}
@@ -108,7 +127,7 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
           />
           <div className="flex justify-between text-sm text-muted-foreground">
             <span>0%</span>
-            <span>5.0%</span>
+            <span>20.0%</span>
           </div>
         </div>
 
