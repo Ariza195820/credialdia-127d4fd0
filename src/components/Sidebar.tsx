@@ -71,14 +71,14 @@ const Sidebar = () => {
       </Link>);
   };
   return <aside className={cn("bg-card border-r border-border flex flex-col transition-all duration-300 z-10", expanded ? "w-64" : "w-16")}>
-      <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-finance-700">
-        {expanded && <h1 className="text-lg font-bold text-slate-50">Credialdia</h1>}
-        <Button variant="ghost" size="icon" onClick={toggleSidebar} className="text-slate-50">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-slate-50">
+        {expanded && <h1 className="text-lg font-bold text-green-900">Credialdia</h1>}
+        <Button variant="ghost" size="icon" onClick={toggleSidebar} className="text-green-900">
           <Menu size={20} />
         </Button>
       </div>
 
-      <div className="flex-1 overflow-y-auto p-2 space-y-4 bg-green-50">
+      <div className="flex-1 overflow-y-auto p-2 space-y-4 bg-finance-50">
         <div className="space-y-1">
           {renderMenuItems(generalItems)}
         </div>
