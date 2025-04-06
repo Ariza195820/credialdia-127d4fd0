@@ -16,7 +16,7 @@ export type LoanCalculationResult = {
   amortizationSchedule: AmortizationRow[];
 };
 
-export type PaymentFrequency = 'weekly' | 'biweekly' | 'monthly';
+export type PaymentFrequency = 'daily' | 'weekly' | 'biweekly' | 'monthly';
 
 export function calculateLoanDetails(
   loanAmount: number,
@@ -37,6 +37,9 @@ export function calculateLoanDetails(
   // Calculate frequency factor
   let frequencyFactor = 1;
   switch (paymentFrequency) {
+    case 'daily':
+      frequencyFactor = 30; // Approximately 30 days per month
+      break;
     case 'weekly':
       frequencyFactor = 52 / 12;
       break;

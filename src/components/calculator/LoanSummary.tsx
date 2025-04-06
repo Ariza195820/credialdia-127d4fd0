@@ -33,6 +33,17 @@ const LoanSummary: React.FC<LoanSummaryProps> = ({
   paymentFrequency,
   latePaymentRate
 }) => {
+  // Helper function to get payment frequency label
+  const getPaymentFrequencyLabel = (frequency: PaymentFrequency): string => {
+    switch(frequency) {
+      case 'daily': return 'Diaria';
+      case 'weekly': return 'Semanal';
+      case 'biweekly': return 'Quincenal';
+      case 'monthly': return 'Mensual';
+      default: return 'Mensual';
+    }
+  };
+  
   return (
     <Card>
       <CardHeader>
@@ -43,7 +54,7 @@ const LoanSummary: React.FC<LoanSummaryProps> = ({
         <div className="grid grid-cols-2 gap-4">
           <Card>
             <CardHeader className="p-4 pb-2">
-              <CardTitle className="text-sm font-medium">Cuota {paymentFrequency === 'weekly' ? 'Semanal' : paymentFrequency === 'biweekly' ? 'Quincenal' : 'Mensual'}</CardTitle>
+              <CardTitle className="text-sm font-medium">Cuota {getPaymentFrequencyLabel(paymentFrequency)}</CardTitle>
             </CardHeader>
             <CardContent className="p-4 pt-0">
               <div className="text-2xl font-bold">{formatCurrency(monthlyPayment)}</div>
@@ -113,7 +124,7 @@ const LoanSummary: React.FC<LoanSummaryProps> = ({
               <div>
                 <p className="text-sm text-muted-foreground">Frecuencia de Pago</p>
                 <p className="font-medium">
-                  {paymentFrequency === 'weekly' ? 'Semanal' : paymentFrequency === 'biweekly' ? 'Quincenal' : 'Mensual'}
+                  {getPaymentFrequencyLabel(paymentFrequency)}
                 </p>
               </div>
               <div>

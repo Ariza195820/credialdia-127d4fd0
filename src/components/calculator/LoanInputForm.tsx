@@ -158,8 +158,11 @@ const LoanInputForm: React.FC<LoanInputFormProps> = ({
             variant="outline"
             value={paymentFrequency}
             onValueChange={(value) => value && setPaymentFrequency(value as PaymentFrequency)}
-            className="justify-start"
+            className="justify-start flex-wrap"
           >
+            <ToggleGroupItem value="daily" aria-label="Daily">
+              Diario
+            </ToggleGroupItem>
             <ToggleGroupItem value="weekly" aria-label="Weekly">
               Semanal
             </ToggleGroupItem>
