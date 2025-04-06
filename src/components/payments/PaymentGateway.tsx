@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -8,7 +7,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { useToast } from '@/hooks/use-toast';
 import { useCurrencyDetection } from '@/hooks/use-currency-detection';
-import { DolarSign, CreditCard, Building, Wallet } from 'lucide-react';
+import { DollarSign, CreditCard, Building, Wallet } from 'lucide-react';
 
 const PaymentGateway = () => {
   const { toast } = useToast();

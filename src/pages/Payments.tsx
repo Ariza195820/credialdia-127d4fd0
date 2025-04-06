@@ -6,6 +6,7 @@ import { useCurrencyDetection } from '@/hooks/use-currency-detection';
 import PaymentGateway from '@/components/payments/PaymentGateway';
 import PaymentStatistics from '@/components/payments/PaymentStatistics';
 import CurrencyConverter from '@/components/payments/CurrencyConverter';
+import { Clock } from 'lucide-react';
 
 const Payments = () => {
   const { currency, currencySymbol, formatCurrency, isLoading } = useCurrencyDetection();
@@ -36,6 +37,10 @@ const Payments = () => {
         </TabsContent>
 
         <TabsContent value="converter" className="pt-4">
+          <div className="mb-4 flex items-center gap-2 text-sm text-muted-foreground">
+            <Clock size={16} />
+            <span>Las tasas de cambio se actualizan según la fecha y hora actual</span>
+          </div>
           <CurrencyConverter 
             defaultCurrency={currency}
             currencySymbol={currencySymbol}

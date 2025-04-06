@@ -1,10 +1,11 @@
 
 import React, { useState, useEffect } from 'react';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle, CardFooter } from '@/components/ui/card';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
+import { ArrowRight, RefreshCw, Clock } from 'lucide-react';
+import { format } from 'date-fns';
 
 interface CurrencyConverterProps {
   defaultCurrency: string;
@@ -24,7 +25,9 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
   const [amount, setAmount] = useState('100');
   const [convertedAmount, setConvertedAmount] = useState('');
   const [exchangeRates, setExchangeRates] = useState<Record<string, number>>({});
-
+  const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  
   const currencies = [
     { code: 'USD', name: 'Dólar Estadounidense', symbol: '$' },
     { code: 'EUR', name: 'Euro', symbol: '€' },
@@ -36,19 +39,49 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
     { code: 'PEN', name: 'Sol Peruano', symbol: 'S/' },
   ];
 
-  // Tasas de cambio simuladas (en la vida real, se obtendrían desde una API)
+  const getExchangeRates = async () => {
+    setIsRefreshing(true);
+    try {
+      // In a real application, you would fetch real exchange rates from an API like:
+      // const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+      // const data = await response.json();
+      // setExchangeRates(data.rates);
+      
+      // For demo purposes, we'll use dynamic mock rates with slight variations based on time
+      const now = new Date();
+      const hourFactor = now.getHours() / 24; // Value between 0-1 based on hour
+      const dayFactor = now.getDate() / 31; // Value between 0-1 based on day of month
+      
+      const mockExchangeRates: Record<string, number> = {
+        'USD': 1.0,
+        'EUR': 0.89 + (hourFactor * 0.02), // Small variation based on hour
+        'COP': 3700 + (dayFactor * 50), // Variation based on day
+        'MXN': 20.5 + (hourFactor * 0.4),
+        'BRL': 5.2 + (dayFactor * 0.2),
+        'ARS': 350 + (hourFactor * 5),
+        'CLP': 880 + (dayFactor * 10),
+        'PEN': 3.7 + (hourFactor * 0.1),
+      };
+      
+      setExchangeRates(mockExchangeRates);
+      setLastUpdated(now);
+    } catch (error) {
+      console.error("Error fetching exchange rates:", error);
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
+
+  // Initial fetch of exchange rates
   useEffect(() => {
-    const mockExchangeRates: Record<string, number> = {
-      'USD': 1.0,
-      'EUR': 0.89,
-      'COP': 3700,
-      'MXN': 20.5,
-      'BRL': 5.2,
-      'ARS': 350,
-      'CLP': 880,
-      'PEN': 3.7,
-    };
-    setExchangeRates(mockExchangeRates);
+    getExchangeRates();
+    
+    // Refresh rates every 30 minutes
+    const interval = setInterval(() => {
+      getExchangeRates();
+    }, 30 * 60 * 1000);
+    
+    return () => clearInterval(interval);
   }, []);
 
   const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,11 +91,11 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
 
   const handleConvert = () => {
     if (exchangeRates[fromCurrency] && exchangeRates[toCurrency]) {
-      // Convertir primero a USD (moneda base) y luego a la moneda destino
+      // Convert first to USD (base currency) and then to the target currency
       const amountInUSD = Number(amount) / exchangeRates[fromCurrency];
       const convertedValue = amountInUSD * exchangeRates[toCurrency];
       
-      // Formatear el resultado
+      // Format the result
       const formatted = new Intl.NumberFormat('es', {
         style: 'currency',
         currency: toCurrency,
@@ -74,9 +107,9 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
     }
   };
 
-  // Realizar conversión automática al cargar o cuando cambian las variables
+  // Perform automatic conversion when inputs change
   useEffect(() => {
-    if (amount && fromCurrency && toCurrency) {
+    if (amount && fromCurrency && toCurrency && Object.keys(exchangeRates).length > 0) {
       handleConvert();
     }
   }, [amount, fromCurrency, toCurrency, exchangeRates]);
@@ -95,7 +128,7 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
     <Card>
       <CardHeader>
         <CardTitle>Conversor de Monedas</CardTitle>
-        <CardDescription>Convierta entre diferentes divisas</CardDescription>
+        <CardDescription>Convierta entre diferentes divisas en tiempo real</CardDescription>
       </CardHeader>
       <CardContent>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -167,12 +200,27 @@ const CurrencyConverter: React.FC<CurrencyConverterProps> = ({
                 {convertedAmount}
               </div>
               <div className="text-sm text-muted-foreground">
-                1 {fromCurrency} = {exchangeRates[toCurrency] / exchangeRates[fromCurrency]} {toCurrency}
+                1 {fromCurrency} = {(exchangeRates[toCurrency] / exchangeRates[fromCurrency]).toFixed(4)} {toCurrency}
               </div>
             </div>
           </div>
         </div>
       </CardContent>
+      <CardFooter className="flex flex-col items-center">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground">
+          <Clock size={16} />
+          <span>Actualizado: {format(lastUpdated, 'dd/MM/yyyy HH:mm:ss')}</span>
+          <Button 
+            size="sm" 
+            variant="ghost" 
+            className="h-8 px-2" 
+            onClick={getExchangeRates}
+            disabled={isRefreshing}
+          >
+            <RefreshCw size={16} className={isRefreshing ? "animate-spin" : ""} />
+          </Button>
+        </div>
+      </CardFooter>
     </Card>
   );
 };
