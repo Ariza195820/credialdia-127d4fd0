@@ -72,8 +72,8 @@ const Sidebar = () => {
   };
   return <aside className={cn("bg-card border-r border-border flex flex-col transition-all duration-300 z-10", expanded ? "w-64" : "w-16")}>
       <div className="flex items-center justify-between px-4 py-3 border-b border-border bg-finance-700">
-        {expanded && <h1 className="text-lg font-bold text-finance-700">Credialdia</h1>}
-        <Button variant="ghost" size="icon" onClick={toggleSidebar} className="text-muted-foreground hover:text-foreground">
+        {expanded && <h1 className="text-lg font-bold text-slate-50">Credialdia</h1>}
+        <Button variant="ghost" size="icon" onClick={toggleSidebar} className="text-slate-50">
           <Menu size={20} />
         </Button>
       </div>
