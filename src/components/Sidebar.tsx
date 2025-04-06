@@ -1,8 +1,9 @@
+
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Home, Users, BarChart3, FileText, Settings, Menu, CreditCard, Bell, Calculator } from 'lucide-react';
+import { Home, Users, BarChart3, FileText, Settings, Menu, CreditCard, Bell, Calculator, FolderOpen } from 'lucide-react';
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
@@ -39,6 +40,11 @@ const Sidebar = () => {
     name: 'Reportes',
     icon: <BarChart3 size={20} />,
     path: '/reports',
+    section: 'admin'
+  }, {
+    name: 'Documentos',
+    icon: <FolderOpen size={20} />,
+    path: '/documents',
     section: 'admin'
   }, {
     name: 'Notificaciones',
