@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Home, Users, BarChart3, FileText, Settings, Menu, CreditCard, Bell, Calculator, FolderOpen } from 'lucide-react';
+import { Home, Users, BarChart3, FileText, Settings, Menu, CreditCard, Bell, Calculator, FolderOpen, Wallet } from 'lucide-react';
 
 const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
@@ -35,6 +35,11 @@ const Sidebar = () => {
     name: 'Calculadora',
     icon: <Calculator size={20} />,
     path: '/calculator',
+    section: 'financial'
+  }, {
+    name: 'Pagos',
+    icon: <Wallet size={20} />,
+    path: '/payments',
     section: 'financial'
   }, {
     name: 'Reportes',

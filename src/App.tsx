@@ -10,6 +10,7 @@ import Clients from "@/pages/Clients";
 import ClientForm from "@/components/ClientForm";
 import Calculator from "@/pages/Calculator";
 import Documents from "@/pages/Documents";
+import Payments from "@/pages/Payments";
 import NotFound from "@/pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -25,6 +26,7 @@ const App = () => (
           <Route path="/clients" element={<Layout><Clients /></Layout>} />
           <Route path="/clients/new" element={<Layout><ClientForm /></Layout>} />
           <Route path="/calculator" element={<Layout><Calculator /></Layout>} />
+          <Route path="/payments" element={<Layout><Payments /></Layout>} />
           <Route path="/documents" element={<Layout><Documents /></Layout>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
