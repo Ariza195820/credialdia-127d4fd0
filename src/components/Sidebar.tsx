@@ -83,17 +83,17 @@ const Sidebar = () => {
           {renderMenuItems(generalItems)}
         </div>
 
-        {expanded && <h2 className="font-semibold text-xs uppercase text-muted-foreground px-3 pt-4">Gestión de Clientes</h2>}
+        {expanded && <h2 className="font-semibold text-xs uppercase px-3 pt-4 text-green-900">Gestión de Clientes</h2>}
         <div className="space-y-1">
           {renderMenuItems(clientItems)}
         </div>
 
-        {expanded && <h2 className="font-semibold text-xs uppercase text-muted-foreground px-3 pt-4">Gestión Financiera</h2>}
+        {expanded && <h2 className="font-semibold text-xs uppercase px-3 pt-4 text-green-900">Gestión Financiera</h2>}
         <div className="space-y-1">
           {renderMenuItems(financialItems)}
         </div>
         
-        {expanded && <h2 className="font-semibold text-xs uppercase text-muted-foreground px-3 pt-4">Gestión Administrativa</h2>}
+        {expanded && <h2 className="font-semibold text-xs uppercase px-3 pt-4 text-green-900">Gestión Administrativa</h2>}
         <div className="space-y-1">
           {renderMenuItems(adminItems)}
         </div>
