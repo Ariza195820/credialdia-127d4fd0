@@ -290,7 +290,7 @@ const Clients = () => {
 
       {/* Cliente Details Dialog */}
       <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
-        <DialogContent className="sm:max-w-[600px]">
+        <DialogContent className="sm:max-w-[90vw] sm:min-h-[80vh] sm:my-8">
           <DialogHeader>
             <DialogTitle>Detalles del Cliente</DialogTitle>
             <DialogDescription>
