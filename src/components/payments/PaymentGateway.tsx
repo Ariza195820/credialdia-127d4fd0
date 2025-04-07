@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -64,6 +65,24 @@ const PaymentGateway = () => {
     }
   };
 
+  // Determine the currency icon to display
+  const getCurrencyIcon = () => {
+    switch (currency) {
+      case "EUR":
+        return <span className="text-lg font-medium">€</span>;
+      case "GBP":
+        return <span className="text-lg font-medium">£</span>;
+      case "JPY":
+        return <span className="text-lg font-medium">¥</span>;
+      case "BRL":
+        return <span className="text-lg font-medium">R$</span>;
+      case "PEN":
+        return <span className="text-lg font-medium">S/</span>;
+      default:
+        return <span className="text-lg font-medium">{currencySymbol}</span>;
+    }
+  };
+
   return (
     <div className="grid gap-6 md:grid-cols-2">
       <Card>
@@ -74,10 +93,10 @@ const PaymentGateway = () => {
         <CardContent>
           <form onSubmit={handlePayment} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="amount">Monto a pagar</Label>
+              <Label htmlFor="amount">Monto a pagar ({currency})</Label>
               <div className="flex items-center">
-                <span className="bg-muted px-3 py-2 rounded-l-md border border-r-0 border-input">
-                  {currencySymbol}
+                <span className="bg-muted px-3 py-2 rounded-l-md border border-r-0 border-input flex items-center justify-center min-w-10">
+                  {getCurrencyIcon()}
                 </span>
                 <Input
                   id="amount"
@@ -88,6 +107,9 @@ const PaymentGateway = () => {
                   placeholder="100.00"
                 />
               </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                Equivalente: {formatCurrency(Number(amount))}
+              </p>
             </div>
 
             <div className="space-y-2">
