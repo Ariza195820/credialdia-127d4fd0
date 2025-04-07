@@ -82,9 +82,9 @@ const Clients = () => {
         </TabsContent>
       </Tabs>
 
-      {/* Cliente Details Dialog */}
+      {/* Cliente Details Dialog - Tamaño ajustado y centrado */}
       <Dialog open={detailsOpen} onOpenChange={setDetailsOpen}>
-        <DialogContent className="sm:max-w-[90vw] sm:min-h-[80vh] sm:my-8">
+        <DialogContent className="sm:max-w-[800px] w-[90%] sm:max-h-[90vh] overflow-y-auto mx-auto my-4">
           <DialogHeader>
             <DialogTitle>Detalles del Cliente</DialogTitle>
             <DialogDescription>
